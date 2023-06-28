@@ -1,0 +1,31 @@
+{
+  "name": "@npmpack/pack2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/cjs/index.js",
+  "module": "./src/ems/index.mjs",
+      "browser": "./src/ems/index.node.mjs",
+"exports": {
+        ".": {
+            "import": {
+                "node": "./src/ems/index.node.mjs",
+                "browser": "./src/ems/index.mjs",
+                "default": "./src/ems/index.mjs"
+            },
+            "require": {
+                "node": "./src/cjs/index.node.cjs",
+                "browser": "./src/cjs/index.cjs",
+                "default": "./src/cjs/index.cjs"
+            }
+        },
+        "./a": {
+            "import": "./src/ems/a.mjs",
+            "require": "./src/cjs/a.cjs"
+        }
+    },
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,3 @@
+packages:
+  - 'packages/test-build/*'
+  - 'packages/test-pack/*'

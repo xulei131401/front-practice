@@ -1,0 +1,13 @@
+{
+  "name": "@npmpack/pack3",
+  "version": "1.0.0",
+  "description": "",
+  "type":"module",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@npmpack/pack2": "workspace:^"
+  }
+}
