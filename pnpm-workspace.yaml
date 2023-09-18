@@ -2,3 +2,6 @@ packages:
   - 'packages/learn-build/*'
   - 'packages/learn-pack/*'
   - 'packages/learn-typescript/*'
+  - 'packages/learn-js'
+  - 'packages/learn-third-part'
+  - 'packages/learn-vue-ts'

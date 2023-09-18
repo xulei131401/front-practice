@@ -1,27 +1,25 @@
 {
-    "name": "@npmpack/pack2",
-    "version": "1.0.0",
-    "description": "",
-    "main": "./src/cjs/index.node.cjs",
-    "browser": "./src/ems/index.node.mjs",
-    "exports": {
-        ".": {
-            "import": {
-                
-                "browser": "./src/ems/index.mjs"
-                
-            },
-            "require": {
-                "default": "./src/cjs/index.cjs"
-            }
-        },
-        "./a": {
-            "import": "./src/ems/a.mjs",
-            "require": "./src/cjs/a.cjs"
-        }
+  "name": "@xulei131401/learn-pack-pack2",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./src/cjs/index.node.cjs",
+  "browser": "./src/ems/index.node.mjs",
+  "exports": {
+    ".": {
+      "import": {
+        "browser": "./src/ems/index.mjs"
+      },
+      "require": {
+        "default": "./src/cjs/index.cjs"
+      }
     },
-    "scripts": {},
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
+    "./a": {
+      "import": "./src/ems/a.mjs",
+      "require": "./src/cjs/a.cjs"
+    }
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
