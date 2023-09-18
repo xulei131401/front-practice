@@ -12,3 +12,9 @@
 
 ## learn-js
 练习js基础
+
+## learn-vue-ts
+练习vite+vue3+ts
+
+## learn-react-ts
+练习vite+react+ts

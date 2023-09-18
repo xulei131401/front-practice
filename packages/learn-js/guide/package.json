@@ -1,15 +1,14 @@
 {
-  "name": "@xulei131401/learn-typescript-guide",
-  "private": "true",
+  "name": "@xulei131401/learn-js-guide",
   "version": "0.0.1",
+  "private": "true",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf ./out",
-    "watch": "tsc -w",
     "server": "serve .",
-    "dev": "pnpm run clean && concurrently \"pnpm run watch\" \"pnpm run server\""
+    "dev": "pnpm run clean && \"pnpm run server\""
   },
   "keywords": [],
   "author": "",
@@ -17,7 +16,6 @@
   "devDependencies": {
     "concurrently": "^8.2.1",
     "rimraf": "^5.0.1",
-    "serve": "^14.2.1",
-    "typescript": "^5.2.2"
+    "serve": "^14.2.1"
   }
 }

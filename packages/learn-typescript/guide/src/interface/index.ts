@@ -1,1 +1,2 @@
-export * from './interface'
+export * from './interface.js'
+export * from './options.js'

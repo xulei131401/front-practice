@@ -8,6 +8,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@npmpack/pack2": "workspace:^"
+    "@xulei131401/learn-pack-pack2": "workspace:^"
   }
 }

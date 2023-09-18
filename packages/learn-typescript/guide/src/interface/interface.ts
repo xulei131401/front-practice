@@ -1,14 +1,23 @@
 /**
- *  学习interface
+ * 结论
+ *  1. interface会自动合并相同的声明
+ *  2. declare module 可以扩展interface定义的属性
  */
 
 export interface Student {
-    name:string
+  name: string;
 }
 
-let defaultStu = {
-    name: "默认学生"
+export interface Student {
+  repeatName: string;
 }
 
+export const tInterface = () => {
+    let defaultStu: Student = {
+        name: "name属性",
+        repeatName: "name1属性",
+    };
 
-console.log("defaultStu:", defaultStu);
+    console.log("defaultStu:", defaultStu);
+}
+
