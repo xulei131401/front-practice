@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<!--    <script type="text/javascript" src="./ttt.js"></script>-->
+    <title>百度地图API功能演示</title>
+</head>
+<body>
+<div>
+    <button type="button" onclick="fff(this)">生 成</button>
+</div>
+</body>
+<script type="text/javascript">
+    // 101619228511827
+    // 334227153249828
+    function rand(m) {
+        m = m > 16 ? 16 : m;
+        var num = Math.random().toString();
+        if(num.substr(num.length - m, 1) === '0') {
+            return rand(m);
+        }
+        return num.substring(num.length - m);
+    }
+
+    function yjid() {
+        var nowTime = new Date().getTime()
+        //前6位取时间
+        var nowTimestr = nowTime.toString().substring(7);
+        //后9位随机
+        return nowTimestr + rand(9);
+    }
+
+    console.log("值:", yjid())
+</script>
+</html>

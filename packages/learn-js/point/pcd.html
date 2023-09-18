@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body, html,#allmap {width: 80%;height: 80%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <title>抓取所有绘制的地图数据</title>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=3aEAPd3v4BmdH9WwBf7sjX4EAr8Mp9qt"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    let map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(116.403765, 39.914850), 5);
+    map.enableScrollWheelZoom();
+    let bdary = new BMap.Boundary();
+
+    let noResult = [];
+    function getBoundary(name, mysql = ''){
+        bdary.get(name, function(rs){
+            let count = rs.boundaries.length;
+            if (count === 0) {
+                noResult.push(name);
+                console.log(name + '解析失败')
+                return;
+            }
+
+            $.post("http://bingo.my.store.com/point/store", {body:JSON.stringify({name:mysql,boundaries:rs.boundaries})},function(result){
+                console.log(name + result.errmsg);
+            });
+        });
+    }
+
+    // 直辖市
+    // $.getJSON("directly_province_level_city.json", (data) => {
+    //     for (let item in data) {
+    //         setTimeout(() => {
+    //             getBoundary(data[item]['all'], data[item]['mysql'])
+    //         }, 100);
+    //     }
+    //
+    //     setTimeout(() => {
+    //         console.log(noResult)
+    //     },20000)
+    // });
+
+    // 全部的省
+    // $.getJSON("p.json",  (data) => {
+    //     let dataLength = data.length;
+    //     for (let i = 0; i < dataLength; i++) {
+    //         getBoundary(data[i],data[i]);
+    //     }
+    //
+    //     setTimeout(() => {
+    //         console.log(noResult)
+    //     },20000)
+    //
+    // });
+
+    // 全部的省_市
+    // $.getJSON("p_c.json", (data) => {
+    //     for (let item in data) {
+    //         setTimeout(() => {
+    //             getBoundary(data[item]['all'], data[item]['mysql'])
+    //         }, 100);
+    //     }
+    //
+    //     setTimeout(() => {
+    //         console.log(noResult)
+    //     },20000)
+    // });
+
+    // 全部的省_市_区
+    // $.getJSON("p_c_d.json", (data) => {
+    //     for (let item in data) {
+    //         setTimeout(() => {
+    //             getBoundary(data[item]['all'], data[item]['mysql'])
+    //         }, 100);
+    //     }
+    //
+    //     setTimeout(() => {
+    //         console.log(noResult)
+    //     },20000)
+    // });
+
+    failProvinceCityDistrictNames = [
+        // p_c
+        "山东省东营市",
+        "湖北省宜昌市",
+        "新疆维吾尔自治区吐鲁番市",
+        "台湾省台北市",
+        "台湾省高雄市",
+        "台湾省台中市",
+        "台湾省台南市",
+        "台湾省新竹市",
+        "台湾省嘉义市",
+        "台湾省新竹县",
+        "台湾省宜兰县",
+        "台湾省苗栗县",
+        "台湾省基隆市",
+        "台湾省彰化县",
+        "台湾省屏东县",
+        "台湾省云林县",
+        "台湾省南投县",
+        "台湾省嘉义县",
+        "台湾省花莲县",
+        "台湾省澎湖县",
+        "香港香港",
+        "澳门澳门",
+        "台湾省台东县",
+        "西藏自治区那曲市",
+        "青海省海西蒙古族藏族自治州",
+
+        // p_c_d
+        "山西省大同市云冈区",
+        "山西省长治市屯留区",
+        "山西省朔州市怀仁市",
+        "黑龙江省佳木斯市郊区",
+        "黑龙江省大兴安岭地区漠河市",
+        "江苏省南通市海安市",
+        "浙江省杭州市临安区",
+        "福建省福州市长乐区",
+        "江西省九江市修水县",
+        "山东省济南市济阳区",
+        "山东省滨州市邹平市",
+        "山东省青岛市即墨区",
+        "湖北省黄石市黄石港区",
+        "湖北省荆门市京山市",
+        "湖南省衡阳市衡东县",
+        "湖南省邵阳市邵阳县",
+        "湖南省湘西土家族苗族自治州古丈县",
+        "广东省深圳市光明区",
+        "广东省佛山市南海区",
+        "广西壮族自治区桂林市荔浦市",
+        "海南省三沙市南沙群岛",
+        "海南省三沙市中沙群岛",
+        "海南省三沙市西沙群岛",
+        "四川省乐山市峨边彝族自治县",
+        "四川省凉山彝族自治州冕宁县",
+        "贵州省毕节市大方县",
+        "贵州省毕节市金沙县",
+        "贵州省毕节市纳雍县",
+        "贵州省毕节市赫章县",
+        "贵州省铜仁市万山区",
+        "贵州省铜仁市江口县",
+        "贵州省毕节市威宁彝族回族苗族自治县",
+        "贵州省铜仁市玉屏侗族自治县",
+        "贵州省铜仁市石阡县",
+        "贵州省铜仁市德江县",
+        "贵州省黔西南布依族苗族自治州兴仁市",
+        "贵州省铜仁市印江土家族苗族自治县",
+        "贵州省铜仁市松桃苗族自治县",
+        "贵州省铜仁市沿河土家族自治县",
+        "云南省昭通市水富市",
+        "西藏自治区日喀则市南木林县",
+        "西藏自治区日喀则市仁布县",
+        "西藏自治区日喀则市康马县",
+        "西藏自治区日喀则市定结县",
+        "西藏自治区日喀则市亚东县",
+        "西藏自治区日喀则市吉隆县",
+        "西藏自治区昌都市江达县",
+        "西藏自治区昌都市贡觉县",
+        "西藏自治区昌都市类乌齐县",
+        "西藏自治区昌都市察雅县",
+        "西藏自治区昌都市丁青县",
+        "西藏自治区昌都市左贡县",
+        "西藏自治区昌都市八宿县",
+        "西藏自治区昌都市芒康县",
+        "西藏自治区昌都市边坝县",
+        "西藏自治区昌都市洛隆县",
+        "西藏自治区那曲市色尼区",
+        "陕西省安康市平利县",
+        "陕西省安康市石泉县",
+        "青海省海东市民和回族土族自治县",
+        "青海省海西蒙古族藏族自治州海西蒙古族藏族自治州直辖",
+        "新疆维吾尔自治区吐鲁番市高昌区",
+        "新疆维吾尔自治区吐鲁番市鄯善县",
+        "新疆维吾尔自治区哈密市伊州区"
+    ];
+
+    //province_city部分
+    // getBoundary('山东省东营市', '山东_东营')
+    // getBoundary('湖北省宜昌市', '湖北_宜昌')
+    // getBoundary('新疆吐鲁番', '新疆维吾尔自治区_吐鲁番')
+    // getBoundary('西藏那曲', '西藏自治区_那曲')
+    // getBoundary('青海海西蒙古族藏族', '青海_海西蒙古族藏族自治州')
+
+
+    //province_city_district部分
+    // getBoundary('辽宁省锦州市黑山县', '辽宁_锦州_黑山县')
+    // getBoundary('云冈', '山西_大同_云冈区')
+    // getBoundary('长治市屯留', '山西_长治_屯留区')
+    // getBoundary('朔州市怀仁', '山西_朔州_怀仁市')
+    // getBoundary('佳木斯郊区', '黑龙江_佳木斯_郊区')
+    // getBoundary('黑龙江省鸡西市鸡东县', '黑龙江_鸡西_鸡东县')
+    // getBoundary('黑龙江漠河市', '黑龙江_大兴安岭地区_漠河市')
+    // getBoundary('南通市海安', '江苏_南通_海安市')
+    // getBoundary('临安区', '浙江_杭州_临安区')
+    // getBoundary('长乐区', '福建_福州_长乐区')
+    // getBoundary('江西省九江市修水县', '江西_九江_修水县')
+    // getBoundary('山东省济南市济阳', '山东_济南_济阳区')
+    // getBoundary('山东省滨州邹平', '山东_滨州_邹平市')
+    // getBoundary('即墨区', '山东_青岛_即墨区')
+    // getBoundary('山东省潍坊市寿光', '山东_潍坊_寿光市')
+    // getBoundary('湖北省黄石市黄石港区', '湖北_黄石_黄石港区')
+    // getBoundary('荆门市京山', '湖北_荆门_京山市')
+    // getBoundary('湖南省邵阳市邵阳', '湖南_邵阳_邵阳县')
+    // getBoundary('湖南省衡阳市衡东县', '湖南_衡阳_衡东县')
+    // getBoundary('湖南省常德市武陵区', '湖南_常德_武陵区')
+    // getBoundary('湖南省湘西土家族苗族自治州古丈县', '湖南_湘西土家族苗族自治州_古丈县')
+    // getBoundary('深圳光明', '广东_深圳_光明区')
+    // getBoundary('广东省佛山市南海', '广东_佛山_南海区')
+    // getBoundary('广西壮族自治区桂林市荔浦', '广西壮族自治区_桂林_荔浦市')
+    // getBoundary('广西壮族自治区柳州市鱼峰区', '广西壮族自治区_柳州_鱼峰区')
+    // getBoundary('海南南沙群岛', '海南_三沙_南沙群岛')
+    // getBoundary('海南中沙群岛', '海南_三沙_中沙群岛')
+    // getBoundary('海南西沙群岛', '海南_三沙_西沙群岛')
+    // getBoundary('四川省乐山市峨边彝族自治县', '四川_乐山_峨边彝族自治县')
+    // getBoundary('四川省凉山彝族自治州冕宁县', '四川_凉山彝族自治州_冕宁县')
+    // getBoundary('四川省甘孜藏族自治州炉霍县', '四川_甘孜藏族自治州_炉霍县')
+    // getBoundary('四川省眉山市丹棱县', '四川_眉山_丹棱县')
+    // getBoundary('四川省乐山市峨边彝族自治县', '四川_乐山_峨边彝族自治县')
+    // getBoundary('贵州省毕节市大方', '贵州_毕节_大方县')
+    // getBoundary('贵州省毕节市金沙', '贵州_毕节_金沙县')
+    // getBoundary('贵州省毕节市赫章', '贵州_毕节_赫章县')
+    // getBoundary('贵州省毕节市纳雍', '贵州_毕节_纳雍县')
+    // getBoundary('贵州省铜仁万山', '贵州_铜仁_万山区')
+    // getBoundary('贵州省铜仁市江口', '贵州_铜仁_江口县')
+    // getBoundary('贵州毕节威宁彝族回族苗族', '贵州_毕节_威宁彝族回族苗族自治县')
+    // getBoundary('贵州省铜仁玉屏侗族自治县', '贵州_铜仁_玉屏侗族自治县')
+    // getBoundary('贵州省铜仁石阡', '贵州_铜仁_石阡县')
+    // getBoundary('贵州省铜仁德江', '贵州_铜仁_德江县')
+    // getBoundary('贵州黔西南布依族苗族自治州兴仁', '贵州_黔西南布依族苗族自治州_兴仁市')
+    // getBoundary('贵州省黔东南苗族侗族自治州黄平县', '贵州_黔东南苗族侗族自治州_黄平县')
+    // getBoundary('铜仁印江土家族苗族', '贵州_铜仁_印江土家族苗族自治县')
+    // getBoundary('贵州铜仁松桃苗族自治县', '贵州_铜仁_松桃苗族自治县')
+    // getBoundary('贵州铜仁沿河土家族自治县', '贵州_铜仁_沿河土家族自治县')
+    // getBoundary('云南省昭通市水富', '云南_昭通_水富市')
+    // getBoundary('西藏日喀则仁布', '西藏自治区_日喀则_仁布县')
+    // getBoundary('康马县', '西藏自治区_日喀则_康马县')
+    // getBoundary('定结县', '西藏自治区_日喀则_定结县')
+    // getBoundary('西藏自治区日喀则市亚东', '西藏自治区_日喀则_亚东县')
+    // getBoundary('西藏自治区日喀则市吉隆', '西藏自治区_日喀则_吉隆县')
+    // getBoundary('西藏自治区昌都市江达', '西藏自治区_昌都_江达县')
+    // getBoundary('西藏自治区昌都市贡觉', '西藏自治区_昌都_贡觉县')
+    // getBoundary('类乌齐', '西藏自治区_昌都_类乌齐县')
+    // getBoundary('西藏自治区昌都市察雅', '西藏自治区_昌都_察雅县')
+    // getBoundary('西藏自治区昌都市丁青', '西藏自治区_昌都_丁青县')
+    // getBoundary('西藏自治区昌都市八宿', '西藏自治区_昌都_八宿县')
+    // getBoundary('西藏自治区昌都市左贡', '西藏自治区_昌都_左贡县')
+    // getBoundary('西藏自治区日喀则市南木林', '西藏自治区_日喀则_南木林县')
+    // getBoundary('芒康', '西藏自治区_昌都_芒康县')
+    // getBoundary('边坝', '西藏自治区_昌都_边坝县')
+    // getBoundary('西藏自治区昌都市洛隆', '西藏自治区_昌都_洛隆县')
+    // getBoundary('色尼区', '西藏自治区_那曲_色尼区')
+    // getBoundary('陕西省安康市平利县', '陕西_安康_平利县')
+    // getBoundary('陕西省安康市石泉县', '陕西_安康_石泉县')
+    // getBoundary('陕西省安康市汉阴', '陕西_安康_汉阴县')
+    // getBoundary('海东民和回族土族自治县', '青海_海东_民和回族土族自治县')
+    // getBoundary('海西蒙古族藏族自治州 海西蒙古族藏族自治州直辖', '青海_海西蒙古族藏族自治州_海西蒙古族藏族自治州直辖')
+    // getBoundary('高昌区', '新疆维吾尔自治区_吐鲁番_高昌区')
+    // getBoundary('鄯善县', '新疆维吾尔自治区_吐鲁番_鄯善县')
+    // getBoundary('伊州区', '新疆维吾尔自治区_哈密_伊州区')
+
+    setTimeout(() => {
+        console.log(noResult)
+    },20000)
+
+</script>

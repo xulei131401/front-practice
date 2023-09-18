@@ -1,5 +1,5 @@
 # front-practice
-前端技能练习
+前端技能练习综合项目，采用monorepo方式组织
 
 ## learn-build
 练习构建工具
