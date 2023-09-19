@@ -27,20 +27,6 @@ importers:
         specifier: ^3.0.2
         version: registry.npmmirror.com/@rollup/plugin-strip@3.0.2
 
-  packages/learn-js: {}
-
-  packages/learn-js/guide:
-    devDependencies:
-      concurrently:
-        specifier: ^8.2.1
-        version: registry.npmmirror.com/concurrently@8.2.1
-      rimraf:
-        specifier: ^5.0.1
-        version: registry.npmmirror.com/rimraf@5.0.1
-      serve:
-        specifier: ^14.2.1
-        version: registry.npmmirror.com/serve@14.2.1
-
   packages/learn-pack/app:
     dependencies:
       '@xulei131401/learn-pack-pack2':
@@ -77,8 +63,6 @@ importers:
         version: link:../pack2
 
   packages/learn-pack/pack4: {}
-
-  packages/learn-third-part: {}
 
   packages/learn-typescript/common:
     devDependencies:
