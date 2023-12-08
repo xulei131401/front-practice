@@ -1,4 +1,4 @@
-# front-practice
+# front-guide
 前端技能练习综合项目，采用monorepo方式组织
 
 ## learn-build
